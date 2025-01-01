@@ -13,9 +13,10 @@ def check_credentials(username: str, password: str):
     return username
 
 
+
+
 @app.get("/secure-endpoint/")
 def secure_endpoint(username = Depends(check_credentials)):
     return {"message": f"Hello, {username}! You are authorized."}
-
 
 uvicorn.run(app)

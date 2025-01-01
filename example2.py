@@ -9,6 +9,9 @@ from pydantic import BaseModel
 app = FastAPI()
 security = HTTPBasic()
 
+class UserLogin(BaseModel):
+    username: str
+    password: str
 
 def check_credentials(credentials: HTTPBasicCredentials = Depends(security)):
     correct_username = secrets.compare_digest(credentials.username, "admin")
@@ -22,7 +25,7 @@ def check_credentials(credentials: HTTPBasicCredentials = Depends(security)):
     return credentials.username
 
 
-@app.get("/secure-endpoint/")
+@app.delete("/secure-endpoint/")
 def secure_endpoint(username=Depends(check_credentials)):
     return {"message": f"Hello, {username}! You are authorized."}
 
